@@ -1,0 +1,20 @@
+---
+  # - name: Decrypt AWS Credentials stored in Ansible Vault
+  #   include_vars: vault.yml
+
+  - name: Launch Simple CloudFormation
+    cloudformation:
+      stack_name: "brian-ansible-demo"
+      state: "present"
+      # aws_access_key: "{{ aws_access_key_id }}"
+      # aws_secret_key: "{{ aws_secret_access_key }}"
+      region: "us-east-1"
+      disable_rollback: false
+      template: "{{ role_path }}/files/cloudformation-simple.json"
+      template_parameters:
+        KeyName: "bshef"
+        InstanceType: "t2.micro"
+      tags:
+        Stack: "brian-ansible-demo"
+        Owner: "brian.shef@rewardstyle.com"
+        Project: "Ansible Demo"

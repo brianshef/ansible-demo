@@ -1,0 +1,2 @@
+---
+  - include: launch_cloudformation.yml
