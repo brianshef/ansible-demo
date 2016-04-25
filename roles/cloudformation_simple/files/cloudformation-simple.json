@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "AWS CloudFormation Sample Template EC2InstanceWithSecurityGroupSample: Create an Amazon EC2 instance running the Amazon Linux AMI. The AMI is chosen based on the region in which the stack is run. This example creates an EC2 security group for the instance to give you SSH access. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template.",
+  "Description" : "Demo 2: Create a simple stack with AWS CloudFormation, using Ansible",
 
   "Parameters" : {
     "KeyName": {
@@ -14,20 +14,25 @@
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
       "Default" : "t2.micro",
-      "AllowedValues" : [ "t1.micro", "t2.nano", "t2.micro", "t2.small", "t2.medium"]
-,
+      "AllowedValues" : [ "t1.micro", "t2.nano", "t2.micro", "t2.small", "t2.medium"],
       "ConstraintDescription" : "must be a valid EC2 instance type."
     },
 
-    "SSHLocation" : {
-      "Description" : "The IP address range that can be used to SSH to the EC2 instances",
-      "Type": "String",
-      "MinLength": "9",
-      "MaxLength": "18",
-      "Default": "0.0.0.0/0",
-      "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
-      "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
-   }
+    "SubnetId" : {
+      "Description" : "The ID of a valid VPC Subnet",
+      "Type" : "String",
+      "Default" : "subnet-bbe976cd",
+      "AllowedValues" : [ "subnet-3b235206", "subnet-bbe976cd", "subnet-10249348", "subnet-8cc864a6" ],
+      "ConstraintDescription" : "Must be a subnet within the dev-pub VPC"
+    },
+
+    "SecurityGroupId" : {
+      "Description" : "The ID of a valid security group",
+      "Type" : "String",
+      "Default" : "sg-ba2991c2",
+      "AllowedValues" : [ "sg-ba2991c2" ],
+      "ConstraintDescription" : "Must be a security group within the dev-pub VPC"
+    }
   },
 
   "Mappings" : {
@@ -60,7 +65,8 @@
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "InstanceType" : { "Ref" : "InstanceType" },
-        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "SecurityGroupIds" : [ {"Ref" : "SecurityGroupId"} ],
+        "SubnetId" : {"Ref" : "SubnetId"},
         "KeyName" : { "Ref" : "KeyName" },
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionArch2AMI", { "Ref" : "AWS::Region" },
                           { "Fn::FindInMap" : [ "AWSInstanceType2Arch", { "Ref" : "InstanceType" }, "Arch" ] } ] },
@@ -74,19 +80,6 @@
             "Value": "brian.shef@rewardstyle.com"
           }
         ]
-      }
-    },
-
-    "InstanceSecurityGroup" : {
-      "Type" : "AWS::EC2::SecurityGroup",
-      "Properties" : {
-        "GroupDescription" : "Enable SSH access via port 22",
-        "SecurityGroupIngress" : [ {
-          "IpProtocol" : "tcp",
-          "FromPort" : "22",
-          "ToPort" : "22",
-          "CidrIp" : { "Ref" : "SSHLocation"}
-        } ]
       }
     }
   },
