@@ -1,4 +1,8 @@
 ---
 - hosts: localhost
+  vars_prompt:
+    - name: "aws_keyname"
+      prompt: "AWS EC2 KeyPair Name"
+      private: false
   roles:
     - cloudformation_simple
