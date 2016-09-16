@@ -4,7 +4,7 @@
 
   - name: Launch Simple CloudFormation
     cloudformation:
-      stack_name: "brian-ansible-demo"
+      stack_name: "ansible-cf-demo"
       state: "present"
       # aws_access_key: "{{ aws_access_key_id }}"
       # aws_secret_key: "{{ aws_secret_access_key }}"
@@ -14,10 +14,11 @@
       template_parameters:
         KeyName: "{{ aws_keyname }}"
         InstanceType: "{{ aws_instance_type }}"
+        SubnetId: "{{ subnet_id }}"
+        SecurityGroupId: "{{ security_group_id }}"
       tags:
-        Stack: "brian-ansible-demo"
-        Owner: "brian.shef@rewardstyle.com"
-        Project: "Ansible Demo"
+        Stack: "ansible-cf-demo"
+        Project: "Ansible CloudFormation Demo"
     register: stack
 
   - name: Show stack Outputs

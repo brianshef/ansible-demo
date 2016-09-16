@@ -11,3 +11,4 @@ Should display a "Hello, World!" debug message.
 
 Should create a simple stack (of one EC2 Instance) with AWS CloudFormation.
 Requires the use of an AWS EC2 KeyPair.
+User must supply a valid AWS VPC Subnet ID and AWS VPC Security Group ID.

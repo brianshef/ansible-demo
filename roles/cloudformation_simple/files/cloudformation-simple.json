@@ -20,18 +20,12 @@
 
     "SubnetId" : {
       "Description" : "The ID of a valid VPC Subnet",
-      "Type" : "String",
-      "Default" : "subnet-bbe976cd",
-      "AllowedValues" : [ "subnet-3b235206", "subnet-bbe976cd", "subnet-10249348", "subnet-8cc864a6" ],
-      "ConstraintDescription" : "Must be a subnet within the dev-pub VPC"
+      "Type" : "String"
     },
 
     "SecurityGroupId" : {
-      "Description" : "The ID of a valid security group",
-      "Type" : "String",
-      "Default" : "sg-ba2991c2",
-      "AllowedValues" : [ "sg-ba2991c2" ],
-      "ConstraintDescription" : "Must be a security group within the dev-pub VPC"
+      "Description" : "The ID of a valid security group in the specified VPC",
+      "Type" : "String"
     }
   },
 

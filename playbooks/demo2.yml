@@ -2,7 +2,13 @@
 - hosts: localhost
   vars_prompt:
     - name: "aws_keyname"
-      prompt: "AWS EC2 KeyPair Name"
+      prompt: "AWS EC2 KeyPair Name "
+      private: false
+    - name: "subnet_id"
+      prompt: "AWS VPC Subnet ID "
+      private: false
+    - name: "security_group_id"
+      prompt: "Security Group ID (for the specified VPC) "
       private: false
   roles:
     - cloudformation_simple

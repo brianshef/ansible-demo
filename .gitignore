@@ -19,4 +19,5 @@
 .Spotlight-V100
 .Trashes
 ._*
+*.retry
 Thumbs.db

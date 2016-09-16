@@ -1,2 +1,4 @@
 aws_region: us-east-1
 aws_instance_type: t2.micro
+subnet_id: 0000000
+security_group_id: 0000000
